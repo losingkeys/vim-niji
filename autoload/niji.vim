@@ -65,12 +65,24 @@ let s:legacy_colours = [['brown', 'RoyalBlue3'],
                       \ ['darkred', 'DarkOrchid3'],
                       \ ['red', 'firebrick3']]
 
+let s:solarized_colours = [[33, 'blue'],
+	                       \ [37, 'cyan'],
+	                       \ [61, 'brmagenta'],
+	                       \ [125, 'magenta'],
+	                       \ [136, 'yellow'],
+	                       \ [160, 'red'],
+	                       \ [166, 'brred']]
+
 for colour_set in [g:niji_dark_colours, g:niji_light_colours, s:legacy_colours]
 	call reverse(colour_set)
 endfor
 
 if exists('g:niji_use_legacy_colours')
 	let s:current_colour_set = s:legacy_colours
+elseif exists('s:' . g:colors_name . '_colours')
+	let s:current_colour_set = eval('s:' . g:colors_name . '_colours')
+elseif exists('s:' . g:colors_name . '_' . &bg . '_colours')
+	let s:current_colour_set = eval('s:' . g:colors_name . '_' . &bg . '_colours')
 else
 	let s:current_colour_set = &bg == 'dark' ? g:niji_dark_colours : g:niji_light_colours
 endif
