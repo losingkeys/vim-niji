@@ -65,13 +65,12 @@ let s:legacy_colours = [['brown', 'RoyalBlue3'],
                       \ ['darkred', 'DarkOrchid3'],
                       \ ['red', 'firebrick3']]
 
-let s:solarized_colours = [[33, 'blue'],
-	                       \ [37, 'cyan'],
-	                       \ [61, 'brmagenta'],
-	                       \ [125, 'magenta'],
-	                       \ [136, 'yellow'],
-	                       \ [160, 'red'],
-	                       \ [166, 'brred']]
+let s:solarized_colours = [[136, 'yellow'],
+ 	                       \ [166, 'brred'],
+ 	                       \ [160, 'red'],
+ 	                       \ [125, 'magenta'],
+ 	                       \ [61, 'brmagenta'],
+ 	                       \ [33, 'blue']]
 
 for colour_set in [g:niji_dark_colours, g:niji_light_colours, s:legacy_colours]
 	call reverse(colour_set)
