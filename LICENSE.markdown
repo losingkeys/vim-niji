@@ -4,6 +4,7 @@ License
 Niji is released under the same terms as Vim itself, the contents of which
 license is quoted verbatim as follows.
 
+```
 VIM LICENSE
 
 I)  There are no restrictions on distributing unmodified copies of Vim except
@@ -82,3 +83,4 @@ IV)  It is not allowed to remove this license from the distribution of the Vim
      sources, parts of it or from a modified version.  You may use this
      license for previous Vim releases instead of the license that they came
      with, at your option.
+```
