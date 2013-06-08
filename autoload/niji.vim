@@ -23,13 +23,9 @@ set cpo&vim
 function! niji#assoc(list_a, list_b)
 	let l:list = []
 
-	" Use for each in range instead of while
-	let l:index = 0
-	while l:index < len(a:list_a)
-		let l:list += [[a:list_a[l:index], a:list_b[l:index]]]
-
-		let l:index += 1
-	endwhile
+	for each in range(1, len(a:list_a))
+		let l:list += [[a:list_a[each -1], a:list_b[each -1]]]
+	endfor
 
 	return l:list
 endfunction
