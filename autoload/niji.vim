@@ -16,37 +16,50 @@ scriptencoding utf-8
 let s:save_cpo = &cpo
 set cpo&vim
 
+" Takes two lists and returns an association list of which the keys are the
+" elements of 'list_a' and the values those of 'list_b'.
+"
+" Assumes 'list_a' and 'list_b' are of equal length.
+function! niji#assoc(list_a, list_b)
+	let l:list = []
+
+	" Use for each in range instead of while
+	let l:index = 0
+	while l:index < len(a:list_a)
+		let l:list += [[a:list_a[l:index], a:list_b[l:index]]]
+
+		let l:index += 1
+	endwhile
+
+	return l:list
+endfunction
+
 if !exists('g:niji_matching_characters')
 	let g:niji_matching_characters = [['(', ')'],
 	                                \ ['\[', '\]'],
 	                                \ ['{', '}']]
 endif
 
-if !exists('g:niji_dark_colours')
-	let g:niji_dark_colours = [['red', 'red1'],
-	                         \ ['yellow', 'orange1'],
-	                         \ ['green', 'yellow1'],
-	                         \ ['cyan', 'greenyellow'],
-	                         \ ['magenta', 'green1'],
-	                         \ ['red', 'springgreen1'],
-	                         \ ['yellow', 'cyan1'],
-	                         \ ['green', 'slateblue1'],
-	                         \ ['cyan', 'magenta1'],
-	                         \ ['magenta', 'purple1']]
-endif
-
-if !exists('g:niji_light_colours')
-	let g:niji_light_colours = [['red', 'red3'],
-	                          \ ['darkyellow', 'orangered3'],
-	                          \ ['darkgreen', 'orange2'],
-	                          \ ['blue', 'yellow3'],
-	                          \ ['darkmagenta', 'olivedrab4'],
-	                          \ ['red', 'green4'],
-	                          \ ['darkyellow', 'paleturquoise3'],
-	                          \ ['darkgreen', 'deepskyblue4'],
-	                          \ ['blue', 'darkslateblue'],
-	                          \ ['darkmagenta', 'darkviolet']]
-endif
+let s:niji_lisp_colours = {'light_colours': [['red', 'red3'],
+                                           \ ['darkyellow', 'orangered3'],
+                                           \ ['darkgreen', 'orange2'],
+                                           \ ['blue', 'yellow3'],
+                                           \ ['darkmagenta', 'olivedrab4'],
+                                           \ ['red', 'green4'],
+                                           \ ['darkyellow', 'paleturquoise3'],
+                                           \ ['darkgreen', 'deepskyblue4'],
+                                           \ ['blue', 'darkslateblue'],
+                                           \ ['darkmagenta', 'darkviolet']],
+                         \ 'dark_colours': [['red', 'red1'],
+                                          \ ['yellow', 'orange1'],
+                                          \ ['green', 'yellow1'],
+                                          \ ['cyan', 'greenyellow'],
+                                          \ ['magenta', 'green1'],
+                                          \ ['red', 'springgreen1'],
+                                          \ ['yellow', 'cyan1'],
+                                          \ ['green', 'slateblue1'],
+                                          \ ['cyan', 'magenta1'],
+                                          \ ['magenta', 'purple1']]}
 
 let s:legacy_colours = [['brown', 'RoyalBlue3'],
                       \ ['Darkblue', 'SeaGreen3'],
@@ -65,25 +78,38 @@ let s:legacy_colours = [['brown', 'RoyalBlue3'],
                       \ ['darkred', 'DarkOrchid3'],
                       \ ['red', 'firebrick3']]
 
-let s:solarized_colours = [[136, 'DarkYellow'],
-                         \ [166, 'LightRed'],
-                         \ [160, 'DarkRed'],
-                         \ [125, 'DarkMagenta'],
-                         \ [61, 'LightMagenta'],
-                         \ [33, 'DarkBlue']]
+" blue, violet, magenta, red, orange, yellow
+if g:colors_name == 'solarized' && !exists('g:niji_solarized_colours')
+	let s:solarized_guifg_colours = ['#268bd2',
+	                     \ '#6c71c4',
+	                     \ '#d33682',
+	                     \ '#dc322f',
+	                     \ '#cb4b16',
+	                     \ '#b58900']
 
-for colour_set in [g:niji_dark_colours, g:niji_light_colours, s:legacy_colours]
+	if g:solarized_termcolors != 256 && &t_Co >= 16
+		let s:solarized_ctermfg_colours = [4, 13, 5, 1, 9, 3]
+	elseif g:solarized_termcolors == 256
+		let s:solarized_ctermfg_colours = [33, 61, 125, 124, 166, 136]
+	else
+		let s:solarized_ctermfg_colours = ['DarkBlue', 'LightMagenta', 'DarkMagenta', 'DarkRed', 'LightRed', 'DarkYellow']
+	endif
+
+	let g:niji_solarized_colours = niji#assoc(s:solarized_ctermfg_colours, s:solarized_guifg_colours)
+endif
+
+for colour_set in [s:niji_lisp_colours['light_colours'], s:niji_lisp_colours['dark_colours'], s:legacy_colours, g:niji_solarized_colours]
 	call reverse(colour_set)
 endfor
 
 if exists('g:niji_use_legacy_colours')
 	let s:current_colour_set = s:legacy_colours
-elseif exists('s:' . g:colors_name . '_colours')
-	let s:current_colour_set = eval('s:' . g:colors_name . '_colours')
-elseif exists('s:' . g:colors_name . '_' . &bg . '_colours')
-	let s:current_colour_set = eval('s:' . g:colors_name . '_' . &bg . '_colours')
+elseif exists('g:niji_' . g:colors_name . '_colours')
+	let s:current_colour_set = eval('g:niji_' . g:colors_name . '_colours')
+elseif exists('g:niji_' . g:colors_name . '_' . &bg . '_colours')
+	let s:current_colour_set = eval('g:niji_' . g:colors_name . '_' . &bg . '_colours')
 else
-	let s:current_colour_set = &bg == 'dark' ? g:niji_dark_colours : g:niji_light_colours
+	let s:current_colour_set = &bg == 'dark' ? s:niji_lisp_colours['dark_colours'] : s:niji_lisp_colours['light_colours']
 endif
 
 function! niji#highlight()
