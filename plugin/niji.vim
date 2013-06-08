@@ -30,4 +30,4 @@ function s:load()
 	endif
 endfunction
 
-autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost * nested call s:load()
+autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,ColorScheme * nested call s:load()
