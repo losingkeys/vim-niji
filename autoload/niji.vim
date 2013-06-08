@@ -105,7 +105,7 @@ function! niji#highlight()
 	for colour_set in [s:niji_lisp_colours['light_colours'],
 	                 \ s:niji_lisp_colours['dark_colours'],
 	                 \ s:legacy_colours,
-	                 \ g:niji_solarized_colours]
+	                 \ exists('g:niji_solarized_colours') ? g:niji_solarized_colours : []]
 		call reverse(colour_set)
 	endfor
 
