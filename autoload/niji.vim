@@ -88,13 +88,22 @@ if g:colors_name == 'solarized' && !exists('g:niji_solarized_colours')
 	elseif g:solarized_termcolors == 256
 		let s:solarized_ctermfg_colours = [33, 61, 125, 124, 166, 136]
 	else
-		let s:solarized_ctermfg_colours = ['DarkBlue', 'LightMagenta', 'DarkMagenta', 'DarkRed', 'LightRed', 'DarkYellow']
+		let s:solarized_ctermfg_colours = ['DarkBlue',
+		                                 \ 'LightMagenta',
+		                                 \ 'DarkMagenta',
+		                                 \ 'DarkRed',
+		                                 \ 'LightRed',
+		                                 \ 'DarkYellow']
 	endif
 
-	let g:niji_solarized_colours = niji#assoc(s:solarized_ctermfg_colours, s:solarized_guifg_colours)
+	let g:niji_solarized_colours = niji#assoc(s:solarized_ctermfg_colours,
+	                                        \ s:solarized_guifg_colours)
 endif
 
-for colour_set in [s:niji_lisp_colours['light_colours'], s:niji_lisp_colours['dark_colours'], s:legacy_colours, g:niji_solarized_colours]
+for colour_set in [s:niji_lisp_colours['light_colours'],
+                 \ s:niji_lisp_colours['dark_colours'],
+                 \ s:legacy_colours,
+                 \ g:niji_solarized_colours]
 	call reverse(colour_set)
 endfor
 
