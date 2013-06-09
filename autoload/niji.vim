@@ -110,8 +110,6 @@ function! niji#highlight()
 		let s:current_colour_set = s:legacy_colours
 	elseif exists('g:niji_' . g:colors_name . '_colours')
 		let s:current_colour_set = eval('g:niji_' . g:colors_name . '_colours')
-	elseif exists('g:niji_' . g:colors_name . '_' . &bg . '_colours')
-		let s:current_colour_set = eval('g:niji_' . g:colors_name . '_' . &bg . '_colours')
 	else
 		let s:current_colour_set = &bg == 'dark' ? s:niji_lisp_colours['dark_colours'] : s:niji_lisp_colours['light_colours']
 	endif
