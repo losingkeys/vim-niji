@@ -121,20 +121,20 @@ function! niji#highlight()
 
 	for character_pair in g:niji_matching_characters
 		for each in range(1, len(s:current_colour_set))
-			execute printf('syntax region paren%s matchgroup=level%s start=/%s/ end=/%s/ contains=ALLBUT,%s',
+			execute printf('syntax region Niji_paren%s matchgroup=Niji_paren_level%s start=/%s/ end=/%s/ contains=ALLBUT,%s',
 			          \ string(each),
 			          \ string(each),
 			          \ character_pair[0],
 			          \ character_pair[1],
 			          \ join(map(filter(range(1, len(s:current_colour_set)),
 			                          \ each == 1 ? 'v:val != len(s:current_colour_set)' : 'v:val != each - 1'),
-			                   \ '"paren" . v:val'),
+			                   \ '"Niji_paren" . v:val'),
 			               \ ','))
 		endfor
 	endfor
 
 	for each in range(1, len(s:current_colour_set))
-		execute printf('highlight default level%s ctermfg=%s guifg=%s',
+		execute printf('highlight default Niji_paren_level%s ctermfg=%s guifg=%s',
 		             \ string(each),
 		             \ s:current_colour_set[each - 1][0],
 		             \ s:current_colour_set[each - 1][1])
