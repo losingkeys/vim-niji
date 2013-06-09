@@ -18,8 +18,8 @@ set cpo&vim
 
 function! niji#highlight()
 
-	" Takes two lists and returns an association list of which the keys are the
-	" elements of 'list_a' and the values those of 'list_b'.
+	" Takes two lists and returns an association list of which the keys are
+	" the elements of 'list_a', and the values those of 'list_b'.
 	"
 	" Assumes 'list_a' and 'list_b' are of equal length.
 	function! s:assoc(list_a, list_b)
