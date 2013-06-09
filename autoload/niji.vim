@@ -77,7 +77,7 @@ function! niji#highlight()
 	                      \ ['red', 'firebrick3']]
 
 	" blue, violet, magenta, red, orange, yellow
-	if g:colors_name == 'solarized' && !exists('g:niji_solarized_colours')
+	if !exists('g:niji_solarized_colours')
 		let s:solarized_guifg_colours = ['#268bd2',
 		                     \ '#6c71c4',
 		                     \ '#d33682',
