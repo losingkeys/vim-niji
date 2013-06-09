@@ -76,14 +76,14 @@ function! niji#highlight()
 	                      \ ['darkred', 'DarkOrchid3'],
 	                      \ ['red', 'firebrick3']]
 
-	" blue, violet, magenta, red, orange, yellow
+	" Solarized (blue, violet, magenta, red, orange, yellow)
 	if !exists('g:niji_solarized_colours')
 		let s:solarized_guifg_colours = ['#268bd2',
-		                     \ '#6c71c4',
-		                     \ '#d33682',
-		                     \ '#dc322f',
-		                     \ '#cb4b16',
-		                     \ '#b58900']
+		                               \ '#6c71c4',
+		                               \ '#d33682',
+		                               \ '#dc322f',
+		                               \ '#cb4b16',
+		                               \ '#b58900']
 
 		if g:solarized_termcolors != 256 && &t_Co >= 16
 			let s:solarized_ctermfg_colours = [4, 13, 5, 1, 9, 3]
@@ -99,7 +99,7 @@ function! niji#highlight()
 		endif
 
 		let g:niji_solarized_colours = s:assoc(s:solarized_ctermfg_colours,
-		                                        \ s:solarized_guifg_colours)
+		                                     \ s:solarized_guifg_colours)
 	endif
 
 	for colour_set in [s:niji_lisp_colours['light_colours'],
