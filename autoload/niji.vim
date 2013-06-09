@@ -19,7 +19,7 @@ set cpo&vim
 function! niji#highlight()
 
 	" Assumes 'list_a' and 'list_b' are of equal length.
-	function! s:association_list_with_keys_and_values(list_a, list_b)
+	function! l:association_list_with_keys_and_values(list_a, list_b)
 		let l:list = []
 
 		for each in range(1, len(a:list_a))
@@ -95,7 +95,7 @@ function! niji#highlight()
 			                                 \ 'DarkYellow']
 		endif
 
-		let g:niji_solarized_colours = s:association_list_with_keys_and_values(s:solarized_ctermfg_colours,
+		let g:niji_solarized_colours = l:association_list_with_keys_and_values(s:solarized_ctermfg_colours,
 		                                                                     \ s:solarized_guifg_colours)
 	endif
 
