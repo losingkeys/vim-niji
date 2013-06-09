@@ -18,11 +18,8 @@ set cpo&vim
 
 function! niji#highlight()
 
-	" Takes two lists and returns an association list of which the keys are
-	" the elements of 'list_a', and the values those of 'list_b'.
-	"
 	" Assumes 'list_a' and 'list_b' are of equal length.
-	function! s:assoc(list_a, list_b)
+	function! s:association_list_with_keys_and_values(list_a, list_b)
 		let l:list = []
 
 		for each in range(1, len(a:list_a))
@@ -98,8 +95,8 @@ function! niji#highlight()
 			                                 \ 'DarkYellow']
 		endif
 
-		let g:niji_solarized_colours = s:assoc(s:solarized_ctermfg_colours,
-		                                     \ s:solarized_guifg_colours)
+		let g:niji_solarized_colours = s:association_list_with_keys_and_values(s:solarized_ctermfg_colours,
+		                                                                     \ s:solarized_guifg_colours)
 	endif
 
 	for colour_set in [s:niji_lisp_colours['light_colours'],
