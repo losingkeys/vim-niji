@@ -56,8 +56,6 @@ endfunction
 function! niji#set_colours()
 	if exists('g:niji_colours')
 		let s:current_colour_set = eval('g:niji_colours')
-	elseif exists('g:niji_' . &bg . '_colours')
-		let s:current_colour_set = eval('g:niji_' . &bg . '_colours')
 	elseif exists('*niji#get_' . g:colors_name . '_colours')
 		" use a function to get the proper colours for the current
 		" colorscheme if that function exists
