@@ -87,6 +87,29 @@ function! niji#set_colours()
 		                                   \ ['darkmagenta', 'darkviolet']]
 	endif
 
+
+	" We need a list of pairs to set up highlighting (a list with 1+ lists of
+	" two items each, the first for terminal highlighting and the second for gui
+	" highlighting)
+
+	" If we have a map, assume it has 'light' and 'dark' keys and choose the
+	" right one based on the current background
+	if type(s:current_colour_set) == type({})
+		let l:temp_colour_set = s:current_colour_set[&bg]
+		unlet s:current_colour_set
+		let s:current_colour_set = l:temp_colour_set
+	endif
+
+	" If we have a list of strings, make a list of pairs of strings by
+	" duplicating each and wrapping the pairs in a list
+	if type(s:current_colour_set) == type([]) &&
+	      \ len(s:current_colour_set) &&
+	      \ type(s:current_colour_set[0]) == type('')
+		let l:temp_colour_set = niji#association_list_with_keys_and_values(s:current_colour_set, s:current_colour_set)
+		unlet s:current_colour_set
+		let s:current_colour_set = l:temp_colour_set
+	endif
+
 	call reverse(s:current_colour_set)
 endfunction
 
