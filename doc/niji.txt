@@ -59,9 +59,9 @@ CONTENTS                                                     *niji-contents*
            b) ‘g:niji_matching_filetypes’ . . .  |'niji_matching_filetypes'|
            c) ‘g:niji_match_all_filetypes’  . . |'niji_match_all_filetypes'|
            d) ‘g:niji_matching_characters’  . . |'niji_matching_characters'|
-           e) ‘g:niji_dark_colours’ & . . . . . . . .  |'niji_dark_colours'|
+           e) ‘g:niji_colours’   . . . . . . . . . . . . .  |'niji_colours'|
+           f) ‘g:niji_dark_colours’ & . . . . . . . .  |'niji_dark_colours'|
               ‘g:niji_light_colours’  . . . . . . . . |'niji_light_colours'|
-           f) ‘g:niji_use_legacy_colours’ . . .  |'niji_use_legacy_colours'|
       4. Credit Where It’s Due  . . . . . . . . . . . . . . . |niji-credits|
       5. Contributions  . . . . . . . . . . . . . . . . |niji-contributions|
       6. Version History  . . . . . . . . . . . . . . |niji-version-history|
@@ -193,6 +193,32 @@ You can override this setting by defining your own, for example:
 Note that you need to backslash escape square brackets (‘[’ and ‘]’).
 
 
+‘g:niji_colours’                                            *'niji_colours'*
+
+To override the default colours for both light and dark modes, set
+`g:niji_colours`.  For instance the following code uses the legacy colours
+that older rainbow parentheses plugins used to use:
+>
+    let g:niji_colours = [['brown', 'RoyalBlue3'],
+                        \ ['Darkblue', 'SeaGreen3'],
+                        \ ['darkgray', 'DarkOrchid3'],
+                        \ ['darkgreen', 'firebrick3'],
+                        \ ['darkcyan', 'RoyalBlue3'],
+                        \ ['darkred', 'SeaGreen3'],
+                        \ ['darkmagenta', 'DarkOrchid3'],
+                        \ ['brown', 'firebrick3'],
+                        \ ['gray', 'RoyalBlue3'],
+                        \ ['black', 'SeaGreen3'],
+                        \ ['darkmagenta', 'DarkOrchid3'],
+                        \ ['Darkblue', 'firebrick3'],
+                        \ ['darkgreen', 'RoyalBlue3'],
+                        \ ['darkcyan', 'SeaGreen3'],
+                        \ ['darkred', 'DarkOrchid3'],
+                        \ ['red', 'firebrick3']]
+<
+
+Note the British spelling of ‘colour’.
+
 ‘g:niji_dark_colours’ &                                *'niji_dark_colours'*
 ‘g:niji_light_colours’                                *'niji_light_colours'*
 
@@ -216,23 +242,7 @@ You can define as few or as many as you like, and Niji will cycle through each
 of them as the nesting of your expressions increases.
 
 If you want to use the same colours for both light and dark backgrounds, you
-could do the following:
->
-    let g:niji_dark_colours = [['brown', 'RoyalBlue3'],
-                             \ ['DarkBlue', 'SeaGreen3']]
-    let g:niji_light_colours = g:niji_dark_colours
-<
-
-Note the British spelling of ‘colour’.
-
-
-‘g:niji_use_legacy_colours’                      *'niji_use_legacy_colours'*
-
-Let this variable to use the colour scheme available in the rainbow
-parentheses scripts by ‘kien’, Martin Krischik, Luc Hermitte and John Gilmore.
->
-    let g:niji_use_legacy_colours = 1
-<
+can set |niji_colours|.
 
 Note the British spelling of ‘colour’.
 

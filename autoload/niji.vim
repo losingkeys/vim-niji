@@ -54,27 +54,9 @@ function! niji#get_solarized_colours()
 endfunction
 
 function! niji#set_colours()
-	if exists('g:niji_use_legacy_colours') && g:niji_use_legacy_colours
-		" the original colour set
-		let s:current_colour_set = [['brown', 'RoyalBlue3'],
-		                          \ ['Darkblue', 'SeaGreen3'],
-		                          \ ['darkgray', 'DarkOrchid3'],
-		                          \ ['darkgreen', 'firebrick3'],
-		                          \ ['darkcyan', 'RoyalBlue3'],
-		                          \ ['darkred', 'SeaGreen3'],
-		                          \ ['darkmagenta', 'DarkOrchid3'],
-		                          \ ['brown', 'firebrick3'],
-		                          \ ['gray', 'RoyalBlue3'],
-		                          \ ['black', 'SeaGreen3'],
-		                          \ ['darkmagenta', 'DarkOrchid3'],
-		                          \ ['Darkblue', 'firebrick3'],
-		                          \ ['darkgreen', 'RoyalBlue3'],
-		                          \ ['darkcyan', 'SeaGreen3'],
-		                          \ ['darkred', 'DarkOrchid3'],
-		                          \ ['red', 'firebrick3']]
-		" use a function to get the proper colours for the current
-		" colorscheme if the function exists
-	elseif exists('*niji#get_' . g:colors_name . '_colours')
+	if exists('*niji#get_' . g:colors_name . '_colours')
+  	" use a function to get the proper colours for the current
+  	" colorscheme if the function exists
 		let s:current_colour_set = eval('niji#get_' . g:colors_name . '_colours()')
 	else
 		" the default colours
@@ -118,9 +100,11 @@ function! niji#highlight()
 		call niji#set_matching_charcaters()
 	endif
 
-	if exists('g:niji_' . &bg . '_colours')
-    let s:current_colour_set = eval('g:niji_' . &bg . '_colours')
-  else
+	if exists('g:niji_colours')
+		let s:current_colour_set = eval('g:niji_colours')
+	elseif exists('g:niji_' . &bg . '_colours')
+		let s:current_colour_set = eval('g:niji_' . &bg . '_colours')
+	else
 		call niji#set_colours()
 	endif
 
