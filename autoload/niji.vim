@@ -54,14 +54,19 @@ function! niji#get_solarized_colours()
 endfunction
 
 function! niji#set_colours()
-	if exists('g:niji_colours')
+	if exists('g:niji_' . g:colors_name . '_colours')
+		" If the user has specified colours specific to this colorscheme, use
+		" those
+		let s:current_colour_set = eval('g:niji_' . g:colors_name . '_colours')
+	elseif exists('g:niji_colours')
+		" If the user has a default colour set, use it
 		let s:current_colour_set = eval('g:niji_colours')
 	elseif exists('*niji#get_' . g:colors_name . '_colours')
-		" use a function to get the proper colours for the current
+		" Use a function to get the proper colours for the current
 		" colorscheme if that function exists
 		let s:current_colour_set = eval('niji#get_' . g:colors_name . '_colours()')
 	else
-		" the default colours
+		" Use the default colours
 		let s:current_colour_set = &bg == 'dark'
 		                                \ ? [['red', 'red1'],
 		                                   \ ['yellow', 'orange1'],

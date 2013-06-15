@@ -60,7 +60,8 @@ CONTENTS                                                     *niji-contents*
            c) ‘g:niji_match_all_filetypes’  . . |'niji_match_all_filetypes'|
            d) ‘g:niji_matching_characters’  . . |'niji_matching_characters'|
            e) Format for custom colour sets . . .   |niji-colour-set-format|
-           f) ‘g:niji_colours’  . . . . . . . . . . . . .   |'niji_colours'|
+           f) ‘g:niji_colours’  . . . . . . . . . . . . . . |'niji_colours'|
+           g) ‘g:niji_???_colours’  . . . . . . . . . . |'niji_???_colours'|
       4. Credit Where It’s Due  . . . . . . . . . . . . . . . |niji-credits|
       5. Contributions  . . . . . . . . . . . . . . . . |niji-contributions|
       6. Version History  . . . . . . . . . . . . . . |niji-version-history|
@@ -264,6 +265,24 @@ parenthesis colour comes last.
 
 You can define as few or as many as you like, and Niji will cycle through each
 of them as the nesting of your expressions increases.
+
+
+‘g:niji_???_colours’                                     *'niji_???_colours'*
+
+To specify a colour set specific to some colorscheme, add a variable called
+`g:niji_colorscheme_colours` where "colorscheme" is the name of the current
+colour scheme (you can check that with |:colorscheme|).  This variable follows
+the same rules as |niji-colour-set-format| and has higher presedence than the
+|'niji_colours'| variable.  For example, to set the colour scheme for
+solarized, you might use:
+>
+    let g:niji_solarized_colours = { 'dark': [['brown', 'RoyalBlue3'],
+                                            \ ['darkred', 'DarkOrchid3'],
+                                            \ ['red', 'firebrick3']],
+                                   \ 'light': [['Darkblue', 'firebrick3'],
+                                             \ ['darkgreen', 'RoyalBlue3'],
+                                             \ ['darkcyan', 'SeaGreen3']] }
+<
 
 Note the British spelling of ‘colour’.
 
