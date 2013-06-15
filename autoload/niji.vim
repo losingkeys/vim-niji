@@ -54,9 +54,13 @@ function! niji#get_solarized_colours()
 endfunction
 
 function! niji#set_colours()
-	if exists('*niji#get_' . g:colors_name . '_colours')
-  	" use a function to get the proper colours for the current
-  	" colorscheme if the function exists
+	if exists('g:niji_colours')
+		let s:current_colour_set = eval('g:niji_colours')
+	elseif exists('g:niji_' . &bg . '_colours')
+		let s:current_colour_set = eval('g:niji_' . &bg . '_colours')
+	elseif exists('*niji#get_' . g:colors_name . '_colours')
+		" use a function to get the proper colours for the current
+		" colorscheme if that function exists
 		let s:current_colour_set = eval('niji#get_' . g:colors_name . '_colours()')
 	else
 		" the default colours
@@ -82,33 +86,21 @@ function! niji#set_colours()
 		                                   \ ['blue', 'darkslateblue'],
 		                                   \ ['darkmagenta', 'darkviolet']]
 	endif
+
+	call reverse(s:current_colour_set)
 endfunction
 
 function! niji#set_matching_charcaters()
-	let g:niji_matching_characters = [['(', ')'],
-	                                \ ['\[', '\]'],
-	                                \ ['{', '}']]
+	if !exists('g:niji_matching_characters')
+		let g:niji_matching_characters = [['(', ')'],
+	                                  \ ['\[', '\]'],
+	                                  \ ['{', '}']]
+	endif
 endfunction
 
 function! niji#highlight()
-	" Niji needs two variables to highlight matches
-	" 1) Which characters to highlight (g:niji_matching_characters)
-	" 2) Which colours to use (g:niji_light_colours or g:niji_dark_colours)
-	" If these aren't set, we'll provide the best defaults possible
-	" for more options see `:help niji-configuration`
-	if !exists('g:niji_matching_characters')
-		call niji#set_matching_charcaters()
-	endif
-
-	if exists('g:niji_colours')
-		let s:current_colour_set = eval('g:niji_colours')
-	elseif exists('g:niji_' . &bg . '_colours')
-		let s:current_colour_set = eval('g:niji_' . &bg . '_colours')
-	else
-		call niji#set_colours()
-	endif
-
-	call reverse(s:current_colour_set)
+	call niji#set_colours()
+	call niji#set_matching_charcaters()
 
 	for character_pair in g:niji_matching_characters
 		for each in range(1, len(s:current_colour_set))
