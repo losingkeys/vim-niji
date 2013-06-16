@@ -59,9 +59,9 @@ CONTENTS                                                     *niji-contents*
            b) ‘g:niji_matching_filetypes’ . . .  |'niji_matching_filetypes'|
            c) ‘g:niji_match_all_filetypes’  . . |'niji_match_all_filetypes'|
            d) ‘g:niji_matching_characters’  . . |'niji_matching_characters'|
-           e) ‘g:niji_dark_colours’ & . . . . . . . .  |'niji_dark_colours'|
-              ‘g:niji_light_colours’  . . . . . . . . |'niji_light_colours'|
-           f) ‘g:niji_use_legacy_colours’ . . .  |'niji_use_legacy_colours'|
+           e) Format for custom colour sets . . .   |niji-colour-set-format|
+           f) ‘g:niji_colours’  . . . . . . . . . . . . . . |'niji_colours'|
+           g) ‘g:niji_???_colours’  . . . . . . . . . . |'niji_???_colours'|
       4. Credit Where It’s Due  . . . . . . . . . . . . . . . |niji-credits|
       5. Contributions  . . . . . . . . . . . . . . . . |niji-contributions|
       6. Version History  . . . . . . . . . . . . . . |niji-version-history|
@@ -193,21 +193,72 @@ You can override this setting by defining your own, for example:
 Note that you need to backslash escape square brackets (‘[’ and ‘]’).
 
 
-‘g:niji_dark_colours’ &                                *'niji_dark_colours'*
-‘g:niji_light_colours’                                *'niji_light_colours'*
+Format for custom colour sets                       *niji-colour-set-format*
 
-By default, Niji chooses between two sets of 10 colours -- based on whether
-your `colorscheme` uses a dark or light background, and with support for both
-terminal and graphical variants of Vim (such as Gvim or MacVim) -- which match
-those of Vim‘s built-in Lisp syntax file. You can override these by defining
-your own list of colours, for example:
+When you specify a custom colour set (the |'niji_colours'| variable) you can
+use a few different formats.
+
+    1. A list of pairs, for example:
 >
-    let g:niji_dark_colours = [['brown', 'RoyalBlue3'],
-                            \ ['Darkblue', 'SeaGreen3'],
-                            \ ['darkgray', 'DarkOrchid3'],
-                            \ ['darkgreen', 'firebrick3'],
-                            \ ['darkcyan', 'RoyalBlue3']]
+    let g:niji_colours = [['brown', 'RoyalBlue3'],
+                        \ ['darkred', 'DarkOrchid3'],
+                        \ ['red', 'firebrick3']]
 <
+    2. A map containing light/dark lists of pairs, for example:
+>
+    let g:niji_colours = { 'dark': [['brown', 'RoyalBlue3'],
+                                  \ ['darkred', 'DarkOrchid3'],
+                                  \ ['red', 'firebrick3']],
+                         \ 'light': [['Darkblue', 'firebrick3'],
+                                   \ ['darkgreen', 'RoyalBlue3'],
+                                   \ ['darkcyan', 'SeaGreen3']] }
+<
+    3. A list of strings, for example:
+>
+    let g:niji_colours = ['brown',
+                        \ 'darkred',
+                        \ 'red']
+<
+    4. A map containing light/dark lists of strings, for example:
+>
+    let g:niji_colours = { 'dark': ['brown',
+                                  \ 'darkred',
+                                  \ 'red'],
+                         \ 'light': ['Darkblue',
+                                  \ 'darkgreen',
+                                  \ 'darkcyan'] }
+<
+
+Note If you specify pairs of colours, the first colour will be used for
+consoles, while the second will be used for GUIs.
+
+
+‘g:niji_colours’                                            *'niji_colours'*
+
+To override the default colours for both light and dark modes, set
+`g:niji_colours`.  For instance the following code uses the legacy colours
+that older rainbow parentheses plugins used to use:
+>
+    let g:niji_colours = [['brown', 'RoyalBlue3'],
+                        \ ['Darkblue', 'SeaGreen3'],
+                        \ ['darkgray', 'DarkOrchid3'],
+                        \ ['darkgreen', 'firebrick3'],
+                        \ ['darkcyan', 'RoyalBlue3'],
+                        \ ['darkred', 'SeaGreen3'],
+                        \ ['darkmagenta', 'DarkOrchid3'],
+                        \ ['brown', 'firebrick3'],
+                        \ ['gray', 'RoyalBlue3'],
+                        \ ['black', 'SeaGreen3'],
+                        \ ['darkmagenta', 'DarkOrchid3'],
+                        \ ['Darkblue', 'firebrick3'],
+                        \ ['darkgreen', 'RoyalBlue3'],
+                        \ ['darkcyan', 'SeaGreen3'],
+                        \ ['darkred', 'DarkOrchid3'],
+                        \ ['red', 'firebrick3']]
+<
+
+Note You can also specify a Dictionary (see |niji-colour-set-format|) if you
+want different colours for light and dark backgrounds.
 
 Note that your outer-most parenthesis colour comes first, and the inner-most
 parenthesis colour comes last.
@@ -215,23 +266,22 @@ parenthesis colour comes last.
 You can define as few or as many as you like, and Niji will cycle through each
 of them as the nesting of your expressions increases.
 
-If you want to use the same colours for both light and dark backgrounds, you
-could do the following:
+
+‘g:niji_???_colours’                                     *'niji_???_colours'*
+
+To specify a colour set specific to some colorscheme, add a variable called
+`g:niji_colorscheme_colours` where "colorscheme" is the name of the current
+colour scheme (you can check that with |:colorscheme|).  This variable follows
+the same rules as |niji-colour-set-format| and has higher presedence than the
+|'niji_colours'| variable.  For example, to set the colour scheme for
+solarized, you might use:
 >
-    let g:niji_dark_colours = [['brown', 'RoyalBlue3'],
-                             \ ['DarkBlue', 'SeaGreen3']]
-    let g:niji_light_colours = g:niji_dark_colours
-<
-
-Note the British spelling of ‘colour’.
-
-
-‘g:niji_use_legacy_colours’                      *'niji_use_legacy_colours'*
-
-Let this variable to use the colour scheme available in the rainbow
-parentheses scripts by ‘kien’, Martin Krischik, Luc Hermitte and John Gilmore.
->
-    let g:niji_use_legacy_colours = 1
+    let g:niji_solarized_colours = { 'dark': [['brown', 'RoyalBlue3'],
+                                            \ ['darkred', 'DarkOrchid3'],
+                                            \ ['red', 'firebrick3']],
+                                   \ 'light': [['Darkblue', 'firebrick3'],
+                                             \ ['darkgreen', 'RoyalBlue3'],
+                                             \ ['darkcyan', 'SeaGreen3']] }
 <
 
 Note the British spelling of ‘colour’.
