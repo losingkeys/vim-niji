@@ -27,7 +27,7 @@ function! niji#association_list_with_keys_and_values(list_a, list_b)
 	return l:list
 endfunction
 
-function! niji#get_solarized_colours()
+function! niji#solarized_colours()
 	" Solarized (blue, violet, magenta, red, orange, yellow)
 	let l:solarized_guifg_colours = ['#268bd2',
 	                               \ '#6c71c4',
@@ -61,10 +61,10 @@ function! niji#set_colours()
 	elseif exists('g:niji_colours')
 		" If the user has a default colour set, use it
 		let s:current_colour_set = eval('g:niji_colours')
-	elseif exists('*niji#get_' . g:colors_name . '_colours')
+	elseif exists('*niji#' . g:colors_name . '_colours')
 		" Use a function to get the proper colours for the current
 		" colorscheme if that function exists
-		let s:current_colour_set = eval('niji#get_' . g:colors_name . '_colours()')
+		let s:current_colour_set = eval('niji#' . g:colors_name . '_colours()')
 	else
 		" Use the default colours
 		let s:current_colour_set = &bg == 'dark'
