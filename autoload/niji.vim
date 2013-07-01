@@ -17,7 +17,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " Assumes 'list_a' and 'list_b' are of equal length.
-function! niji#association_list_with_keys_and_values(list_a, list_b)
+function niji#association_list_with_keys_and_values(list_a, list_b)
 	let l:list = []
 
 	for each in range(1, len(a:list_a))
@@ -27,7 +27,7 @@ function! niji#association_list_with_keys_and_values(list_a, list_b)
 	return l:list
 endfunction
 
-function! niji#solarized_colours()
+function niji#solarized_colours()
 	" Solarized (blue, violet, magenta, red, orange, yellow)
 	let l:solarized_guifg_colours = ['#268bd2',
 	                               \ '#6c71c4',
@@ -53,7 +53,7 @@ function! niji#solarized_colours()
 	                                                \ l:solarized_guifg_colours)
 endfunction
 
-function! niji#set_colours()
+function niji#set_colours()
 	if exists('g:niji_' . g:colors_name . '_colours')
 		" If the user has specified colours specific to this colorscheme, use
 		" those
@@ -127,7 +127,7 @@ function niji#rainbow_parenthesise()
 	call niji#highlight(g:niji_matching_characters, s:current_colour_set)
 end
 
-function! niji#highlight(matching_characters, colour_set)
+function niji#highlight(matching_characters, colour_set)
 	for character_pair in a:matching_characters
 		for each in range(1, len(a:colour_set))
 			execute printf('syntax region Niji_paren%s matchgroup=Niji_paren_level%s start=/%s/ end=/%s/ contains=ALLBUT,%s',
