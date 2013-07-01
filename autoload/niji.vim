@@ -27,6 +27,49 @@ function niji#association_list_with_keys_and_values(list_a, list_b)
 	return l:list
 endfunction
 
+function niji#normalised_colours(colour_set)
+	" Takes a colour set in one of three formats and returns it in a
+	" fourth. The four formats are described as follows:
+	"
+	" 1. A single list of colours: the same colours are used for both
+	"    light and dark backgrounds, and both terminal and graphical
+	"    variants of Vim.
+	"
+	"        [red, blue, green]
+	"
+	" 2. A list of a list of pairs: the same colours are used for both
+	"    light and dark backgrounds, but different colours for terminal and
+	"    graphical variants of Vim.
+	"
+	"        [[red, red1], [blue, blue1], [green, green1]]
+	"
+	" 3. A dictionary of two lists of colours: different colours are used
+	"    for light and dark backgrounds, but the same colours are used for
+	"    both terminal and graphical variants of Vim.
+	"
+	"        {‘light_colours’: [red, blue, green],
+	"        \ ‘dark_colours’: [orange, purple, yellow]}
+	"
+	" 4. A dictionary of two lists of a list of pairs: different colours
+	"    are used for both light and dark backgrounds, and both terminal
+	"    and graphical variants of vim.
+	"
+	"        {‘light_colours’: [[red, red1], [blue, blue1], [green, green1]],
+	"        \ ‘dark_colours’: [[orange, orange1], [purple, purple1], [yellow, yellow1]]}
+	"
+	" Assumes the colour sets are correctly formed.
+	if type(a:colour_set) == type({})
+		return {'light_colours': niji#association_list_with_keys_and_values(a:colour_set['light_colours'], a:colour_set['light_colours']),
+		      \ 'dark_colours': niji#association_list_with_keys_and_values(a:colour_set['dark_colours'], a:colour_set['dark_colours'])}
+	elseif type(a:colour_set[0] == type([])
+		return {'light_colours': a:colour_set,
+		      \ 'dark_colours': a:colour_set}
+	else
+		return {'light_colours': niji#association_list_with_keys_and_values(a:colour_set, a:colour_set),
+		      \ 'dark_colours': niji#association_list_with_keys_and_values(a:colour_set, a:colour_set)}
+	endif
+endfunction
+
 function niji#solarized_colours()
 	" Solarized (blue, violet, magenta, red, orange, yellow)
 	let l:solarized_guifg_colours = ['#268bd2',
