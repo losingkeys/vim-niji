@@ -26,7 +26,7 @@ endif
 
 function s:load()
 	if count(g:niji_matching_filetypes, &ft) > 0 || exists('g:niji_match_all_filetypes')
-		call niji#highlight()
+		call niji#rainbow_parenthesise()
 	endif
 endfunction
 

@@ -116,34 +116,37 @@ function! niji#set_colours()
 	call reverse(s:current_colour_set)
 endfunction
 
-if !exists('g:niji_matching_characters')
-	let g:niji_matching_characters = [['(', ')'],
-	                                \ ['\[', '\]'],
-	                                \ ['{', '}']]
-endif
+function niji#rainbow_parenthesise()
+	if !exists('g:niji_matching_characters')
+		let g:niji_matching_characters = [['(', ')'],
+		                                \ ['\[', '\]'],
+		                                \ ['{', '}']]
+	endif
 
-function! niji#highlight()
 	call niji#set_colours()
+	call niji#highlight(g:niji_matching_characters, s:current_colour_set)
+end
 
-	for character_pair in g:niji_matching_characters
-		for each in range(1, len(s:current_colour_set))
+function! niji#highlight(matching_characters, colour_set)
+	for character_pair in a:matching_characters
+		for each in range(1, len(a:colour_set))
 			execute printf('syntax region Niji_paren%s matchgroup=Niji_paren_level%s start=/%s/ end=/%s/ contains=ALLBUT,%s',
 			          \ string(each),
 			          \ string(each),
 			          \ character_pair[0],
 			          \ character_pair[1],
-			          \ join(map(filter(range(1, len(s:current_colour_set)),
-			                          \ each == 1 ? 'v:val != len(s:current_colour_set)' : 'v:val != each - 1'),
+			          \ join(map(filter(range(1, len(a:colour_set)),
+			                          \ each == 1 ? 'v:val != len(a:colour_set)' : 'v:val != each - 1'),
 			                   \ '"Niji_paren" . v:val'),
 			               \ ','))
 		endfor
 	endfor
 
-	for each in range(1, len(s:current_colour_set))
+	for each in range(1, len(a:colour_set))
 		execute printf('highlight default Niji_paren_level%s ctermfg=%s guifg=%s',
 		             \ string(each),
-		             \ s:current_colour_set[each - 1][0],
-		             \ s:current_colour_set[each - 1][1])
+		             \ a:colour_set[each - 1][0],
+		             \ a:colour_set[each - 1][1])
 	endfor
 endfunction
 
