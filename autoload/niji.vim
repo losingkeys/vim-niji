@@ -125,7 +125,7 @@ function niji#rainbow_parenthesise()
 
 	call niji#set_colours()
 	call niji#highlight(g:niji_matching_characters, s:current_colour_set)
-end
+endfunction
 
 function niji#highlight(matching_characters, colour_set)
 	for character_pair in a:matching_characters
