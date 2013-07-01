@@ -16,8 +16,8 @@ scriptencoding utf-8
 let s:save_cpo = &cpo
 set cpo&vim
 
-" Assumes 'list_a' and 'list_b' are of equal length.
 function niji#association_list_with_keys_and_values(list_a, list_b)
+	" Assumes 'list_a' and 'list_b' are of equal length.
 	let l:list = []
 
 	for each in range(1, len(a:list_a))
