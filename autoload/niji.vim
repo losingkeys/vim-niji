@@ -116,17 +116,14 @@ function! niji#set_colours()
 	call reverse(s:current_colour_set)
 endfunction
 
-function! niji#set_matching_charcaters()
-	if !exists('g:niji_matching_characters')
-		let g:niji_matching_characters = [['(', ')'],
-	                                  \ ['\[', '\]'],
-	                                  \ ['{', '}']]
-	endif
-endfunction
+if !exists('g:niji_matching_characters')
+	let g:niji_matching_characters = [['(', ')'],
+	                                \ ['\[', '\]'],
+	                                \ ['{', '}']]
+endif
 
 function! niji#highlight()
 	call niji#set_colours()
-	call niji#set_matching_charcaters()
 
 	for character_pair in g:niji_matching_characters
 		for each in range(1, len(s:current_colour_set))
