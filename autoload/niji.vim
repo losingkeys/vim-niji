@@ -138,69 +138,6 @@ function niji#solarized_colours()
 	                                                \ l:solarized_guifg_colours)
 endfunction
 
-function niji#set_colours()
-	if exists('g:niji_' . g:colors_name . '_colours')
-		" If the user has specified colours specific to this colorscheme, use
-		" those
-		let s:current_colour_set = eval('g:niji_' . g:colors_name . '_colours')
-	elseif exists('g:niji_colours')
-		" If the user has a default colour set, use it
-		let s:current_colour_set = eval('g:niji_colours')
-	elseif exists('*niji#' . g:colors_name . '_colours')
-		" Use a function to get the proper colours for the current
-		" colorscheme if that function exists
-		let s:current_colour_set = eval('niji#' . g:colors_name . '_colours()')
-	else
-		" Use the default colours
-		let s:current_colour_set = &bg == 'dark'
-		                                \ ? [['red', 'red1'],
-		                                   \ ['yellow', 'orange1'],
-		                                   \ ['green', 'yellow1'],
-		                                   \ ['cyan', 'greenyellow'],
-		                                   \ ['magenta', 'green1'],
-		                                   \ ['red', 'springgreen1'],
-		                                   \ ['yellow', 'cyan1'],
-		                                   \ ['green', 'slateblue1'],
-		                                   \ ['cyan', 'magenta1'],
-		                                   \ ['magenta', 'purple1']]
-		                                \ : [['red', 'red3'],
-		                                   \ ['darkyellow', 'orangered3'],
-		                                   \ ['darkgreen', 'orange2'],
-		                                   \ ['blue', 'yellow3'],
-		                                   \ ['darkmagenta', 'olivedrab4'],
-		                                   \ ['red', 'green4'],
-		                                   \ ['darkyellow', 'paleturquoise3'],
-		                                   \ ['darkgreen', 'deepskyblue4'],
-		                                   \ ['blue', 'darkslateblue'],
-		                                   \ ['darkmagenta', 'darkviolet']]
-	endif
-
-
-	" We need a list of pairs to set up highlighting (a list with 1+ lists of
-	" two items each, the first for terminal highlighting and the second for gui
-	" highlighting)
-
-	" If we have a map, assume it has 'light' and 'dark' keys and choose the
-	" right one based on the current background
-	if type(s:current_colour_set) == type({})
-		let l:temp_colour_set = s:current_colour_set[&bg]
-		unlet s:current_colour_set
-		let s:current_colour_set = l:temp_colour_set
-	endif
-
-	" If we have a list of strings, make a list of pairs of strings by
-	" duplicating each and wrapping the pairs in a list
-	if type(s:current_colour_set) == type([]) &&
-	      \ len(s:current_colour_set) &&
-	      \ type(s:current_colour_set[0]) == type('')
-		let l:temp_colour_set = niji#association_list_with_keys_and_values(s:current_colour_set, s:current_colour_set)
-		unlet s:current_colour_set
-		let s:current_colour_set = l:temp_colour_set
-	endif
-
-	call reverse(s:current_colour_set)
-endfunction
-
 function niji#rainbow_parenthesise()
 	if !exists('g:niji_matching_characters')
 		let g:niji_matching_characters = [['(', ')'],
@@ -208,8 +145,23 @@ function niji#rainbow_parenthesise()
 		                                \ ['{', '}']]
 	endif
 
-	call niji#set_colours()
-	call niji#highlight(g:niji_matching_characters, s:current_colour_set)
+	if exists('g:niji_always_use')
+		let l:colour_set = g:niji_always_use
+	elseif exists('g:niji_' . g:colors_name . '_colours')
+		let l:colour_set = eval('g:niji_' . g:colors_name . '_colours')
+	elseif exists('*niji#' . g:colors_name . '_colours')
+		let l:colour_set = call(function('niji#' . g:colors_name . '_colours'))
+	else
+		let l:colour_set = niji#lisp_colours
+	endif
+
+	if &bg == 'light'
+		let l:colour_set = reverse(niji#normalised_colours(l:colour_scheme)['light_colours'])
+	elseif &bg == 'dark'
+		let l:colour_set = reverse(niji#normalised_colours(l:colour_scheme)['dark_colours'])
+	endif
+
+	call niji#highlight(g:niji_matching_characters, l:colour_set)
 endfunction
 
 function niji#highlight(matching_characters, colour_set)
