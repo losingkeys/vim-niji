@@ -157,6 +157,8 @@ function niji#rainbow_parenthesise()
 		let l:colour_set = eval('g:niji_' . g:colors_name . '_colours')
 	elseif exists('*niji#' . g:colors_name . '_colours')
 		let l:colour_set = call('niji#' . g:colors_name . '_colours', [])
+	elseif exists('g:niji_use_legacy_colours')
+		let l:colour_set = call('niji#legacy_colours', [])
 	else
 		let l:colour_set = call('niji#lisp_colours', [])
 	endif
