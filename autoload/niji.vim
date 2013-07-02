@@ -58,13 +58,13 @@ function niji#normalised_colours(colour_set)
 	"        \ ‘dark_colours’: [[orange, orange1], [purple, purple1], [yellow, yellow1]]}
 	"
 	" Assumes the colour sets are correctly formed.
-	if type(a:colour_set) == type({}) && type(a:colour_set['light_colours'][0] == type('')
+	if type(a:colour_set) == type({}) && type(a:colour_set['light_colours'][0]) == type('')
 		return {'light_colours': niji#association_list_with_keys_and_values(a:colour_set['light_colours'], a:colour_set['light_colours']),
 		      \ 'dark_colours': niji#association_list_with_keys_and_values(a:colour_set['dark_colours'], a:colour_set['dark_colours'])}
-	elseif type(a:colour_set[0] == type([])
+	elseif type(a:colour_set[0]) == type([])
 		return {'light_colours': a:colour_set,
 		      \ 'dark_colours': a:colour_set}
-	elseif type(a:colour_set[0] == type('')
+	elseif type(a:colour_set[0]) == type('')
 		return {'light_colours': niji#association_list_with_keys_and_values(a:colour_set, a:colour_set),
 		      \ 'dark_colours': niji#association_list_with_keys_and_values(a:colour_set, a:colour_set)}
 	endif
@@ -150,15 +150,15 @@ function niji#rainbow_parenthesise()
 	elseif exists('g:niji_' . g:colors_name . '_colours')
 		let l:colour_set = eval('g:niji_' . g:colors_name . '_colours')
 	elseif exists('*niji#' . g:colors_name . '_colours')
-		let l:colour_set = call(function('niji#' . g:colors_name . '_colours'))
+		let l:colour_set = call('niji#' . g:colors_name . '_colours', [])
 	else
 		let l:colour_set = niji#lisp_colours
 	endif
 
 	if &bg == 'light'
-		let l:colour_set = reverse(niji#normalised_colours(l:colour_scheme)['light_colours'])
+		let l:colour_set = reverse(niji#normalised_colours(l:colour_set)['light_colours'])
 	elseif &bg == 'dark'
-		let l:colour_set = reverse(niji#normalised_colours(l:colour_scheme)['dark_colours'])
+		let l:colour_set = reverse(niji#normalised_colours(l:colour_set)['dark_colours'])
 	endif
 
 	call niji#highlight(g:niji_matching_characters, l:colour_set)
