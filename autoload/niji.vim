@@ -161,13 +161,8 @@ function niji#rainbow_parenthesise()
 		let l:colour_set = call('niji#lisp_colours', [])
 	endif
 
-	if &bg == 'light'
-		let l:final_colour_set = reverse(niji#normalised_colours(l:colour_set)['light_colours'])
-	elseif &bg == 'dark'
-		let l:final_colour_set = reverse(niji#normalised_colours(l:colour_set)['dark_colours'])
-	endif
-
-	call niji#highlight(g:niji_matching_characters, l:final_colour_set)
+	call niji#highlight(g:niji_matching_characters,
+	                  \ reverse(niji#normalised_colours(l:colour_set)[&bg == 'light' ? 'light_colours' : 'dark_colours']))
 endfunction
 
 function niji#highlight(matching_characters, colour_set)
