@@ -58,15 +58,21 @@ function niji#normalised_colours(colour_set)
 	"        \ ‘dark_colours’: [[orange, orange1], [purple, purple1], [yellow, yellow1]]}
 	"
 	" Assumes the colour sets are correctly formed.
-	if type(a:colour_set) == type({}) && type(a:colour_set['light_colours'][0]) == type('')
-		return {'light_colours': niji#association_list_with_keys_and_values(a:colour_set['light_colours'], a:colour_set['light_colours']),
-		      \ 'dark_colours': niji#association_list_with_keys_and_values(a:colour_set['dark_colours'], a:colour_set['dark_colours'])}
-	elseif type(a:colour_set[0]) == type([])
-		return {'light_colours': a:colour_set,
-		      \ 'dark_colours': a:colour_set}
-	elseif type(a:colour_set[0]) == type('')
-		return {'light_colours': niji#association_list_with_keys_and_values(a:colour_set, a:colour_set),
-		      \ 'dark_colours': niji#association_list_with_keys_and_values(a:colour_set, a:colour_set)}
+	if type(a:colour_set) == type({})
+		if type(a:colour_set['light_colours'][0]) == type('')
+			return {'light_colours': niji#association_list_with_keys_and_values(a:colour_set['light_colours'], a:colour_set['light_colours']),
+			      \ 'dark_colours': niji#association_list_with_keys_and_values(a:colour_set['dark_colours'], a:colour_set['dark_colours'])}
+		else
+			return a:colour_set
+		endif
+	elseif type(a:colour_set) == type([])
+		if type(a:colour_set[0]) == type([])
+			return {'light_colours': a:colour_set,
+			      \ 'dark_colours': a:colour_set}
+		elseif type(a:colour_set[0]) == type('')
+			return {'light_colours': niji#association_list_with_keys_and_values(a:colour_set, a:colour_set),
+			      \ 'dark_colours': niji#association_list_with_keys_and_values(a:colour_set, a:colour_set)}
+		endif
 	endif
 endfunction
 
