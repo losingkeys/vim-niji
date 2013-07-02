@@ -70,6 +70,48 @@ function niji#normalised_colours(colour_set)
 	endif
 endfunction
 
+function niji#lisp_colours()
+	return {'light_colours': [['red', 'red3'],
+	                        \ ['darkyellow', 'orangered3'],
+	                        \ ['darkgreen', 'orange2'],
+	                        \ ['blue', 'yellow3'],
+	                        \ ['darkmagenta', 'olivedrab4'],
+	                        \ ['red', 'green4'],
+	                        \ ['darkyellow', 'paleturquoise3'],
+	                        \ ['darkgreen', 'deepskyblue4'],
+	                        \ ['blue', 'darkslateblue'],
+	                        \ ['darkmagenta', 'darkviolet']],
+	      \ 'dark_colours': [['red', 'red1'],
+	                       \ ['yellow', 'orange1'],
+	                       \ ['green', 'yellow1'],
+	                       \ ['cyan', 'greenyellow'],
+	                       \ ['magenta', 'green1'],
+	                       \ ['red', 'springgreen1'],
+	                       \ ['yellow', 'cyan1'],
+	                       \ ['green', 'slateblue1'],
+	                       \ ['cyan', 'magenta1'],
+	                       \ ['magenta', 'purple1']]}
+endfunction
+
+function niji#legacy_colours()
+	return [['brown', 'RoyalBlue3'],
+	      \ ['Darkblue', 'SeaGreen3'],
+	      \ ['darkgray', 'DarkOrchid3'],
+	      \ ['darkgreen', 'firebrick3'],
+	      \ ['darkcyan', 'RoyalBlue3'],
+	      \ ['darkred', 'SeaGreen3'],
+	      \ ['darkmagenta', 'DarkOrchid3'],
+	      \ ['brown', 'firebrick3'],
+	      \ ['gray', 'RoyalBlue3'],
+	      \ ['black', 'SeaGreen3'],
+	      \ ['darkmagenta', 'DarkOrchid3'],
+	      \ ['Darkblue', 'firebrick3'],
+	      \ ['darkgreen', 'RoyalBlue3'],
+	      \ ['darkcyan', 'SeaGreen3'],
+	      \ ['darkred', 'DarkOrchid3'],
+	      \ ['red', 'firebrick3']]
+endfunction
+
 function niji#solarized_colours()
 	" Solarized (blue, violet, magenta, red, orange, yellow)
 	let l:solarized_guifg_colours = ['#268bd2',
