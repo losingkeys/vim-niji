@@ -16,6 +16,12 @@ scriptencoding utf-8
 let s:save_cpo = &cpo
 set cpo&vim
 
+let s:lisp_characters = [['(', ')']]
+let s:scheme_characters = [['(', ')'], ['\[', '\]']]
+let s:clojure_characters = [['(', ')'], ['\[', '\]'], ['{', '}']]
+
+lockvar s:lisp_characters s:scheme_characters s:clojure_characters
+
 function! niji#association_list_with_keys_and_values(list_a, list_b)
 	" Assumes 'list_a' and 'list_b' are of equal length.
 	let l:list = []
@@ -145,14 +151,16 @@ function! niji#legacy_colours()
 endfunction
 
 function! niji#rainbow_parenthesise()
-	if !exists('g:niji_matching_characters')
-		let g:niji_matching_characters = [['(', ')'],
-		                                \ ['\[', '\]'],
-		                                \ ['{', '}']]
+	if exists('g:niji_always_match')
+		let l:matching_characters = g:niji_always_match
+	elseif exists('g:niji_' . &ft . '_characters')
+		let l:matching_characters = eval('g:niji_' . &ft . '_characters')
+	else
+		let l:matching_characters = eval('s:' . &ft . '_characters')
 	endif
 
-	if exists('g:niji_always_use')
-		let l:colour_set = g:niji_always_use
+	if exists('g:niji_always_highlight')
+		let l:colour_set = g:niji_always_highlight
 	elseif exists('g:niji_' . g:colors_name . '_colours')
 		let l:colour_set = eval('g:niji_' . g:colors_name . '_colours')
 	elseif exists('*niji#' . g:colors_name . '_colours')
@@ -163,7 +171,7 @@ function! niji#rainbow_parenthesise()
 		let l:colour_set = call('niji#lisp_colours', [])
 	endif
 
-	call niji#highlight(g:niji_matching_characters,
+	call niji#highlight(l:matching_characters,
 	                  \ reverse(niji#normalised_colours(l:colour_set)[&bg == 'light' ? 'light_colours' : 'dark_colours']))
 endfunction
 
