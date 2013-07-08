@@ -16,7 +16,7 @@ scriptencoding utf-8
 let s:save_cpo = &cpo
 set cpo&vim
 
-function niji#association_list_with_keys_and_values(list_a, list_b)
+function! niji#association_list_with_keys_and_values(list_a, list_b)
 	" Assumes 'list_a' and 'list_b' are of equal length.
 	let l:list = []
 
@@ -27,7 +27,7 @@ function niji#association_list_with_keys_and_values(list_a, list_b)
 	return l:list
 endfunction
 
-function niji#normalised_colours(colour_set)
+function! niji#normalised_colours(colour_set)
 	" Takes a colour set in one of three formats and returns it in a
 	" fourth. The four formats are described as follows:
 	"
@@ -76,7 +76,7 @@ function niji#normalised_colours(colour_set)
 	endif
 endfunction
 
-function niji#solarized_colours()
+function! niji#solarized_colours()
 	" Solarized (blue, violet, magenta, red, orange, yellow)
 	let l:solarized_guifg_colours = ['#268bd2',
 	                               \ '#6c71c4',
@@ -102,7 +102,7 @@ function niji#solarized_colours()
 	                                                \ l:solarized_guifg_colours)
 endfunction
 
-function niji#lisp_colours()
+function! niji#lisp_colours()
 	return {'light_colours': [['red', 'red3'],
 	                        \ ['darkyellow', 'orangered3'],
 	                        \ ['darkgreen', 'orange2'],
@@ -125,7 +125,7 @@ function niji#lisp_colours()
 	                       \ ['magenta', 'purple1']]}
 endfunction
 
-function niji#legacy_colours()
+function! niji#legacy_colours()
 	return [['brown', 'RoyalBlue3'],
 	      \ ['Darkblue', 'SeaGreen3'],
 	      \ ['darkgray', 'DarkOrchid3'],
@@ -144,7 +144,7 @@ function niji#legacy_colours()
 	      \ ['red', 'firebrick3']]
 endfunction
 
-function niji#rainbow_parenthesise()
+function! niji#rainbow_parenthesise()
 	if !exists('g:niji_matching_characters')
 		let g:niji_matching_characters = [['(', ')'],
 		                                \ ['\[', '\]'],
@@ -167,7 +167,7 @@ function niji#rainbow_parenthesise()
 	                  \ reverse(niji#normalised_colours(l:colour_set)[&bg == 'light' ? 'light_colours' : 'dark_colours']))
 endfunction
 
-function niji#highlight(matching_characters, colour_set)
+function! niji#highlight(matching_characters, colour_set)
 	for character_pair in a:matching_characters
 		for each in range(1, len(a:colour_set))
 			execute printf('syntax region Niji_paren%s matchgroup=Niji_paren_level%s start=/%s/ end=/%s/ contains=ALLBUT,%s',

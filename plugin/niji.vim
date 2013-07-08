@@ -24,7 +24,7 @@ if !exists('g:niji_matching_filetypes')
 	let g:niji_matching_filetypes = ['lisp', 'scheme', 'clojure']
 endif
 
-function s:load()
+function! s:load()
 	if count(g:niji_matching_filetypes, &ft) > 0 || exists('g:niji_match_all_filetypes')
 		call niji#rainbow_parenthesise()
 	endif
