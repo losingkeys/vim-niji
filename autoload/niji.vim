@@ -60,8 +60,8 @@ function niji#normalised_colours(colour_set)
 	" Assumes the colour sets are correctly formed.
 	if type(a:colour_set) == type({})
 		if type(a:colour_set['light_colours'][0]) == type('')
-			return {'light_colours': niji#association_list_with_keys_and_values(a:colour_set['light_colours'], a:colour_set['light_colours']),
-			      \ 'dark_colours': niji#association_list_with_keys_and_values(a:colour_set['dark_colours'], a:colour_set['dark_colours'])}
+			return {'light_colours': niji#association_list_with_keys_and_values(a:colour_set.light_colours, a:colour_set.light_colours),
+			      \ 'dark_colours': niji#association_list_with_keys_and_values(a:colour_set.dark_colours, a:colour_set.dark_colours)}
 		else
 			return a:colour_set
 		endif
