@@ -17,6 +17,10 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! niji#association_list_with_keys_and_values(list_a, list_b)
+	" Takes two lists and builds a list of list pairs where the 0'th
+	" indices are the items of 'list_a' and the 1'th indices are the items
+	" of 'list_b'.
+	"
 	" Assumes 'list_a' and 'list_b' are of equal length.
 	let l:list = []
 
@@ -103,6 +107,7 @@ function! niji#solarized_colours()
 endfunction
 
 function! niji#lisp_colours()
+	" As they appear in Vim's packaged Lisp.vim syntax file.
 	return {'light_colours': [['red', 'red3'],
 	                        \ ['darkyellow', 'orangered3'],
 	                        \ ['darkgreen', 'orange2'],
@@ -126,6 +131,8 @@ function! niji#lisp_colours()
 endfunction
 
 function! niji#legacy_colours()
+	" As they appear in most rainbow parentheses scripts release before
+	" this one.
 	return [['brown', 'RoyalBlue3'],
 	      \ ['Darkblue', 'SeaGreen3'],
 	      \ ['darkgray', 'DarkOrchid3'],
@@ -145,6 +152,19 @@ function! niji#legacy_colours()
 endfunction
 
 function! niji#rainbow_parenthesise()
+	" Prepare appropriate sets of matching characters and colours, for the
+	" current filetype and colorscheme, respectively. Attempts to choose
+	" these in the following order:
+	"
+	" 1. A set the user wants loaded always.
+	" 2. A set the user wants loaded for the current filetype
+	"    or colorscheme.
+	" 3. A set appropriate to the current filetype or colorscheme.
+	" 4. An otherwise sensible default.
+	let l:lisp_characters = [['(', ')']]
+	let l:scheme_characters = [['(', ')'], ['\[', '\]']]
+	let l:clojure_characters = [['(', ')'], ['\[', '\]'], ['{', '}']]
+
 	if exists('g:niji_always_match')
 		let l:matching_characters = g:niji_always_match
 	elseif exists('g:niji_' . &ft . '_characters')
@@ -172,6 +192,14 @@ function! niji#rainbow_parenthesise()
 endfunction
 
 function! niji#highlight(matching_characters, colour_set)
+	" Creates syntax and highlight groups for each set of pairs of
+	" characters and colours, respectively.
+	"
+	" The definition of syntax groups differs from the included Lisp.vim
+	" and rainbow parentheses plugins released previously to this one:
+	" uses the ALLBUT syntax to exclude all parentheses except the next
+	" level. This resolves a bug found in all previous implementations
+	" where there is a single extra level of un-styled parentheses.
 	for character_pair in a:matching_characters
 		for each in range(1, len(a:colour_set))
 			execute printf('syntax region Niji_paren%s matchgroup=Niji_paren_level%s start=/%s/ end=/%s/ contains=ALLBUT,%s',
