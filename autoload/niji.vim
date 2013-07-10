@@ -16,12 +16,6 @@ scriptencoding utf-8
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:lisp_characters = [['(', ')']]
-let s:scheme_characters = [['(', ')'], ['\[', '\]']]
-let s:clojure_characters = [['(', ')'], ['\[', '\]'], ['{', '}']]
-
-lockvar s:lisp_characters s:scheme_characters s:clojure_characters
-
 function! niji#association_list_with_keys_and_values(list_a, list_b)
 	" Assumes 'list_a' and 'list_b' are of equal length.
 	let l:list = []
@@ -156,7 +150,7 @@ function! niji#rainbow_parenthesise()
 	elseif exists('g:niji_' . &ft . '_characters')
 		let l:matching_characters = eval('g:niji_' . &ft . '_characters')
 	else
-		let l:matching_characters = eval('s:' . &ft . '_characters')
+		let l:matching_characters = eval('l:' . &ft . '_characters')
 	endif
 
 	if exists('g:niji_always_highlight')
