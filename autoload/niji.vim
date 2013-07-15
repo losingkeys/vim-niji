@@ -161,7 +161,7 @@ function! niji#rainbow_parenthesise()
 	"    or colorscheme.
 	" 3. A set appropriate to the current filetype or colorscheme.
 	" 4. An otherwise sensible default.
-	let l:lisp_characters = [['(', ')']]
+	let l:lisp_characters = [['`\=(', ')']]
 	let l:scheme_characters = [['(', ')'], ['\[', '\]']]
 	let l:clojure_characters = [['(', ')'], ['\[', '\]'], ['{', '}']]
 
