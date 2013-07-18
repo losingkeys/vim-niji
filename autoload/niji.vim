@@ -89,10 +89,16 @@ function! niji#solarized_colours()
 	                               \ '#cb4b16',
 	                               \ '#b58900']
 
-	if g:solarized_termcolors != 256 && &t_Co >= 16
+	let l:supported_termcolors = &t_Co
+
+	if exists('g:solarized_termcolors')
+		let l:supported_termcolors = g:solarized_termcolors
+	endif
+
+	if l:supported_termcolors >= 256
+		let l:solarized_ctermfg_colours = [33, 61, 125, 160, 166, 136]
+	elseif l:supported_termcolors >= 16
 		let l:solarized_ctermfg_colours = [4, 13, 5, 1, 9, 3]
-	elseif g:solarized_termcolors == 256
-		let l:solarized_ctermfg_colours = [33, 61, 125, 124, 166, 136]
 	else
 		let l:solarized_ctermfg_colours = ['DarkBlue',
 		                                 \ 'LightMagenta',
