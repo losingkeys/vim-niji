@@ -106,6 +106,36 @@ function! niji#solarized_colours()
 	                                                \ l:solarized_guifg_colours)
 endfunction
 
+function! niji#badwolf_colours()
+	" FIXME: Are these in reverse? amdt (2013/07/22 14:58 JST)
+	let l:mediumgravel = [241, '#666462']
+	let l:dalespale = [221, '#fade3e']
+	let l:dress = [211, '#ff9eb8']
+	let l:orange = [214, '#ffa724']
+	let l:tardis = [39, '#0a9dff']
+	let l:lime = [154, '#aeee00']
+	let l:toffee = [137, '#b88853']
+	let l:saltwatertaffy = [121, '#8cffba']
+	let l:coffee = [173, '#c7915b']
+
+	return [l:mediumgravel,
+	      \ l:dalespale,
+	      \ l:dress,
+	      \ l:orange,
+	      \ l:tardis,
+	      \ l:lime,
+	      \ l:toffee,
+	      \ l:saltwatertaffy,
+	      \ l:coffee,
+	      \ l:dalespale,
+	      \ l:dress,
+	      \ l:orange,
+	      \ l:tardis,
+	      \ l:lime,
+	      \ l:toffee,
+	      \ l:saltwatertaffy]
+endfunction
+
 function! niji#lisp_colours()
 	" As they appear in Vim's packaged Lisp.vim syntax file.
 	return {'light_colours': [['red', 'red3'],
