@@ -102,8 +102,10 @@ function! niji#solarized_colours()
 		                                 \ 'DarkBlue']
 	endif
 
-	return niji#association_list_with_keys_and_values(l:solarized_ctermfg_colours,
-	                                                \ l:solarized_guifg_colours)
+	return {'light_colours': niji#association_list_with_keys_and_values(reverse(copy(l:solarized_ctermfg_colours)),
+	                                                                  \ reverse(copy(l:solarized_guifg_colours))),
+	      \ 'dark_colours': niji#association_list_with_keys_and_values(l:solarized_ctermfg_colours,
+	                                                                 \ l:solarized_guifg_colours)}
 endfunction
 
 function! niji#badwolf_colours()
