@@ -81,25 +81,25 @@ function! niji#normalised_colours(colour_set)
 endfunction
 
 function! niji#solarized_colours()
-	" Solarized (magenta, red, orange, yellow, violet, blue)
-	let l:solarized_guifg_colours = ['#d33682',
-	                               \ '#dc322f',
-	                               \ '#cb4b16',
-	                               \ '#b58900',
+	" Solarized (blue, violet, yellow, orange, red, magenta)
+	let l:solarized_guifg_colours = ['#268bd2',
 	                               \ '#6c71c4',
-	                               \ '#268bd2']
+	                               \ '#b58900',
+	                               \ '#cb4b16',
+	                               \ '#dc322f',
+	                               \ '#d33682']
 
 	if g:solarized_termcolors != 256 && &t_Co >= 16
-		let l:solarized_ctermfg_colours = [5, 1, 9, 3, 13, 4]
+		let l:solarized_ctermfg_colours = [4, 13, 3, 9, 1, 5]
 	elseif g:solarized_termcolors == 256
-		let l:solarized_ctermfg_colours = [135, 124, 166, 136, 61, 33]
+		let l:solarized_ctermfg_colours = [33, 61, 136, 166, 124, 135]
 	else
-		let l:solarized_ctermfg_colours = ['DarkMagenta',
-		                                 \ 'DarkRed',
-		                                 \ 'LightRed',
-		                                 \ 'DarkYellow',
-		                                 \ 'LightMagenta',
-		                                 \ 'DarkBlue']
+		let l:solarized_ctermfg_colours = ['DarkBlue'
+		                                 \ 'LightMagenta'
+		                                 \ 'DarkYellow'
+		                                 \ 'LightRed'
+		                                 \ 'DarkRed'
+		                                 \ 'DarkMagenta']
 	endif
 
 	return niji#association_list_with_keys_and_values(l:solarized_ctermfg_colours,
