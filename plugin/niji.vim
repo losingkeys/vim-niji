@@ -31,3 +31,5 @@ function! s:load()
 endfunction
 
 autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,ColorScheme * nested call s:load()
+
+" vim: set noexpandtab
