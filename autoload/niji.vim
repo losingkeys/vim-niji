@@ -124,7 +124,6 @@ function! niji#solarized_colours()
 endfunction
 
 function! niji#badwolf_colours()
-	" FIXME: Are these in reverse? amdt (2013/07/22 14:58 JST)
 	let l:mediumgravel = [241, '#666462']
 	let l:dalespale = [221, '#fade3e']
 	let l:dress = [211, '#ff9eb8']
