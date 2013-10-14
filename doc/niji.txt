@@ -32,6 +32,7 @@ CONTENTS                                                     *niji-contents*
            e) Format for custom colour sets . . .   |niji-colour-set-format|
            f) ‘g:niji_colours’  . . . . . . . . . . . . . . |'niji_colours'|
            g) ‘g:niji_???_colours’  . . . . . . . . . . |'niji_???_colours'|
+           h) ‘g:niji_weave_colours’  . . . . . . . . |'niji_weave_colours'|
       4. Credit Where It’s Due  . . . . . . . . . . . . . . . |niji-credits|
       5. Contributions  . . . . . . . . . . . . . . . . |niji-contributions|
       6. Version History  . . . . . . . . . . . . . . |niji-version-history|
@@ -253,6 +254,10 @@ solarized, you might use:
                                              \ ['darkgreen', 'RoyalBlue3'],
                                              \ ['darkcyan', 'SeaGreen3']] }
 <
+‘g:niji_weave_colours’                                 *'niji_weave_colours'*
+By default, Niji arranges colors much like that of a rainbow. If you want more
+contrast you can add `let g:niji_weave_colours=1` to your ~/.vimrc to have the
+cool colours woven between the warm colours.
 
 Note the British spelling of ‘colour’.
 
