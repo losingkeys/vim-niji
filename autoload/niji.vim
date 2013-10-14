@@ -197,6 +197,14 @@ function! niji#legacy_colours()
 	      \ ['red', 'firebrick3']]
 endfunction
 
+function! niji#reverse_even_items(list)
+	let l:even_items = filter(copy(a:list), 'v:key % 2')
+
+	call reverse(l:even_items)
+
+	call map(a:list, 'v:key % 2 ? get(l:even_items, v:key / 2) : v:val')
+endfunction
+
 function! niji#rainbow_parenthesise()
 	" Prepare appropriate sets of matching characters and colours, for the
 	" current filetype and colorscheme, respectively. Attempts to choose
@@ -231,8 +239,13 @@ function! niji#rainbow_parenthesise()
 		let l:colour_set = call('niji#lisp_colours', [])
 	endif
 
-	call niji#highlight(l:matching_characters,
-	                  \ reverse(niji#normalised_colours(l:colour_set)[&bg == 'light' ? 'light_colours' : 'dark_colours']))
+	let l:colours = reverse(niji#normalised_colours(l:colour_set)[&bg == 'light' ? 'light_colours' : 'dark_colours'])
+
+	if exists('g:niji_weave_colours')
+		call niji#reverse_even_items(l:colours)
+	endif
+
+	call niji#highlight(l:matching_characters, l:colours)
 endfunction
 
 function! niji#highlight(matching_characters, colour_set)
