@@ -210,6 +210,7 @@ function! niji#rainbow_parenthesise()
 	let l:lisp_characters = [['`\=(', ')']]
 	let l:scheme_characters = [['(', ')'], ['\[', '\]']]
 	let l:clojure_characters = [['(', ')'], ['\[', '\]'], ['{', '}']]
+	let l:racket_characters = [['(', ')'], ['\[', '\]'], ['{', '}']]
 
 	if exists('g:niji_always_match')
 		let l:matching_characters = g:niji_always_match
